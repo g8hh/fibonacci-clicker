@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="pt-pt"><head>
+<meta charset="utf-8" />
+<link rel="StyleSheet" type="text/css" href="style/style.css">
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="kongregate_api.js"></script>
+<script src="crazygames-sdk-v1.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/g8hh/g8hh.github.io/static/js/jquery.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/mootools/1.6.0/mootools-core.min.js"></script>
+<meta charset="utf-8">
+<script type="text/javascript">
+    if (window.location.host === "www.kongregate.com") {
+        kongregateAPI.loadAPI(function () {
+            window.kongregate = kongregateAPI.getAPI();
+        });
+    }
+    else {
+
+        const crazysdk = window.CrazyGames.CrazySDK.getInstance(); //Getting the SDK
+        crazysdk.init(); //Initializing the SDK, call as early as possible
+    }
+
+</script><link rel="canonical" href="https://www.crazygames.com/game/fibonacci-clicker"></head>
+<body>
+<script src="chs.js?07071443"></script>
+<script src="https://cdn.jsdelivr.net/gh/g8hh/g8hh.github.io/zh/core.js"></script>
+<div id="menu" class="content">
+<div id="spacemenu">
+<div class="menubox" id="menu1" onclick="iniciar()">Play Fibonacci Cliker</div>
+<div class="menubox" id="menu2">Sound</div>
+<div onclick="onoff()" id="onoff" class="menubox"><i id="iconsoundmenu" class="fa fa-power-off" style="font-size:30px; line-height:52px; color:red; transition:0.2s;"></i></div>
+<div class="menubox" id="menu3"> Background color</div>
+<div onclick="menuchange(1)" id="whiteback" class="menubox"></div>
+<div onclick="menuchange(2)" id="otherback" class="menubox"></div>
+</div>
+<div id="banner-container">
+<img src="style/images/cg_purple.png" alt>
+</div>
+</div>
+<div id="content" class="content" style="display:none">
+<div id="topbar">
+<div id="powerzone">
+<h2 id="poweraux" class="nn">Click Power</h2>
+<h2 id="power" class="n"></h2>
+</div>
+<div id="pointszone">
+<h2 id="points" class="n">0</h2>
+<h2 id="pointsaux" class="nn">Φ</h2>
+</div>
+<div id="appzone">
+<h2 id="app1" class="nn"><i class="fa fa-group" style="font-size:24px;line-height:37px"></i></h2>
+<h2 id="app2" class="n"></h2>
+<h2 id="app3" class="nn">Appts power</h2>
+<h2 id="app4" class="n"></h2>
+</div>
+<div id="rpzone">
+<h2 id="rptop1" class="nn">Research Points</h2>
+<h2 id="rptop2" class="n"></h2>
+</div>
+<div class="info" id="infopower">
+<h4>Click power is the qtd of Φ you create for every click on the canvas</h4>
+</div>
+<div class="info" id="infoapp">
+<h4>Apprentices power it's based on teach power, the number of apprentices you got and your atual Φ
+</h4>
+</div>
+<div class="info" id="inforp">
+<h4>Research points are created based on your total Φ ever.<br>Check settings to know how much you
+have.</h4>
+</div>
+<div class="info" id="infopts">
+<h4>Φ is the representation of knowledge. You can use it to develop</h4>
+</div>
+<div class="info" id="infobug" style="left: 186px;top: 53px;">
+<h4>When you hit the bug you won 50x you atual power</h4>
+</div>
+<div class="info" id="infoexplo" style="left: 136px;top: 53px;">
+<h4 id="explosionstext">Disable explosions effects</h4>
+</div>
+<div class="info" id="infoparticles" style="left: 170px;top: 53px;">
+<h4 id="particlestext">Disable particles effects</h4>
+</div>
+<div class="info" id="infosquares" style="left: 94px;top: 53px;">
+<h4>Randomize square colors</h4>
+</div>
+<div class="info" id="infochangecanvas">
+<h4>Change theme</h4>
+</div>
+</div>
+<canvas id="myCanvas" height="500px" width="890px" style="z-index:0"></canvas>
+<div id="someOptions">
+<i class="fa fa-volume-up" id="soundicon" onclick="onoff()"></i>
+<div id="changeback" onclick="changeBack()"></div>
+<i class="fa fa-paint-brush" id="changeSquares" style="font-size:22px" onclick="quadrados.randomize()"></i>
+<div id="fibospiral" onclick="spiral()">
+<h2>S</h2>
+</div>
+<div id="exploon" onclick="onoffgraphs(2)">
+<h2>E</h2>
+</div>
+<div id="particleson" onclick="onoffgraphs(1)">
+<h2>P</h2>
+</div>
+<div id="buginfo"><i class="fa fa-bug" id="buginfoicon" style="left: 154px;position: absolute;top: 2px;"></i></div>
+</div>
+<div id="ask-to-click" class="reduced">CLICK</div>
+<div id="rightcontent">
+<div id="top">
+<div id="topbut1" class="topbut">
+<h3>Upgrades</h3>
+<i class="fa fa-plus-square"></i>
+</div>
+<div id="topbut2" class="topbut">
+<h3>Achievements</h3>
+<i class="fa fa-trophy"></i>
+</div>
+<div id="topbut3" class="topbut">
+<i class="fa fa-university"></i>
+<h3>Research</h3>
+</div>
+<div id="topbut4" class="topbut">
+<i class="fa fa-cog" style="right:-10px"></i>
+<h3>Setts</h3>
+</div>
+<div id="open"></div>
+</div>
+<div class="contentbott" id="up">
+<h1 class="textup" id="clicktext">Click upgrades <i class="fa fa-caret-right setaopen" id="setaupg"></i>
+</h1>
+<div id="clickupdiv">
+<div id="cover1" class="close1"></div>
+<div class="updiv" id="up1">
+<div class="leftup">
+<div class="info" id="infoup1">
+<h4>It is the power of each block you shoot each click</h4>
+</div>
+<h3 class="upwhat" id="upwhat1">Click power</h3>
+<div class="info" id="infolevel1">
+<h4 id="textinfolevel1"></h4>
+</div>
+<h3 class="uplevel" id="uplevel1"></h3>
+</div>
+<div class="rightup">
+<div class="toupgradefunc" onclick="upgradefunc(1)">
+<h3 class="upgrade" id="upgrade1">upgrade</h3>
+<h3 class="tonext" id="tonext1"></h3>
+<div class="backbar"></div>
+<div class="bar" id="bar1"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="updiv" id="up2">
+<div class="leftup">
+<div class="info" id="infoup2">
+<h4 id="textinfoup2">It is the probability to appear a bonus item in the bottom of the left
+canvas</h4>
+</div>
+<h3 class="upwhat" id="upwhat2">Bonus chance</h3>
+<div class="info" id="infolevel2">
+<h4 id="textinfolevel2"></h4>
+</div>
+<h3 class="uplevel" id="uplevel2"></h3>
+</div>
+<div class="rightup">
+<div class="toupgradefunc" onclick="upgradefunc(2)">
+<h3 class="upgrade">upgrade</h3>
+<h3 class="tonext" id="tonext2"></h3>
+<div class="backbar"></div>
+<div class="bar" id="bar2"></div>
+</div>
+</div>
+</div>
+<div class="updiv" id="up3">
+<div class="leftup">
+<div class="info" id="infoup3">
+<h4 id="textinfoup3">Is the amount of times the bonus multiplies the number of blocks shoot
+</h4>
+</div>
+<h3 class="upwhat" id="upwhat3">Bonus multiplier</h3>
+<div class="info" id="infolevel3">
+<h4 id="textinfolevel3"></h4>
+</div>
+<h3 class="uplevel" id="uplevel3"></h3>
+</div>
+<div class="rightup">
+<div class="toupgradefunc" onclick="upgradefunc(3)">
+<h3 class="upgrade">upgrade</h3>
+<h3 class="tonext" id="tonext3"></h3>
+<div class="backbar"></div>
+<div class="bar" id="bar3"></div>
+</div>
+</div>
+</div>
+<h1 class="textup" id="apprenticestext">Apprentices upgrades <i class="fa fa-caret-right" id="setaapp"></i></h1>
+<div id="apprenticesupdiv">
+<div id="cover2"></div>
+<div class="updiv" id="up4">
+<div class="leftup">
+<div class="info" id="infoup4">
+<h4 id="textinfoup4">It is the number of apprentices you are teaching</h4>
+</div>
+<h3 class="upwhat" id="upwhat4">Apprentices</h3>
+<div class="info" id="infolevel4">
+<h4 id="textinfolevel4"></h4>
+</div>
+<h3 class="uplevel" id="uplevel4"></h3>
+</div>
+<div class="rightup">
+<div class="toupgradefunc" onclick="upgradefunc(4)">
+<h3 class="upgrade">upgrade</h3>
+<h3 class="tonext" id="tonext4"></h3>
+<div class="backbar"></div>
+<div class="bar" id="bar4"></div>
+</div>
+</div>
+</div>
+<div class="updiv" id="up5">
+<div class="leftup">
+<div class="info" id="infoup5">
+<h4 id="textinfoup5">It is the teach power you got.</h4>
+</div>
+<h3 class="upwhat" id="upwhat5">Teach Power</h3>
+<div class="info" id="infolevel5">
+<h4 id="textinfolevel5"></h4>
+</div>
+<h3 class="uplevel" id="uplevel5"></h3>
+</div>
+<div class="rightup">
+<div class="toupgradefunc" onclick="upgradefunc(5)">
+<h3 class="upgrade">upgrade</h3>
+<h3 class="tonext" id="tonext5"></h3>
+<div class="backbar"></div>
+<div class="bar" id="bar5"></div>
+</div>
+</div>
+</div>
+<div class="updiv" id="up6">
+<div class="leftup">
+<h4 class="upwhat" style="cursor: default;text-transform: none; font-size: 14px; line-height: 24px; margin: 15px 0 0 5px;font-family: 'Aldrich', sans-serif;letter-spacing: -0.5px;">
+You need to build a school</h4>
+<h4 class="uplevel" id="uplevel6" style="cursor: default;text-transform: none; font-size: 14px; line-height: 24px; margin: 0 0 15px 5px;font-family: 'Aldrich', sans-serif;letter-spacing: -0.5px;">
+to unlock apprentices upgrades</h4>
+</div>
+<div class="rightup">
+<div class="toupgradefunc" id="gotoresearch">
+<h3 class="upgrade" style="text-transform: none;">Go to</h3>
+<h3 class="tonext" id="tonext6">Research</h3>
+<div class="backbar"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="contentbott" id="ach">
+<h1>Achievements</h1>
+<div class="achived" id="achiv1">
+<h2 class="what">Fibonacci Level</h2>
+<h3 class="levelachiv" id="levelachiv1"></h3>
+<div class="progbar" id="progbar1"></div>
+<div class="backbar"></div>
+<h3 class="prognum" id="prognum1"></h3>
+<h2 class="reward" id="reward1"></h2>
+</div>
+<div class="achived" id="achiv2">
+<h2 class="what">Clicks</h2>
+<h3 class="levelachiv" id="levelachiv2"></h3>
+<div class="progbar" id="progbar2"></div>
+<div class="backbar"></div>
+<h3 class="prognum" id="prognum2"></h3>
+<h2 class="reward" id="reward2"></h2>
+</div>
+<div class="achived" id="achiv3">
+<h2 class="what">Time Played</h2>
+<h3 class="levelachiv" id="levelachiv3"></h3>
+<div class="progbar" id="progbar3"></div>
+<div class="backbar"></div>
+<h3 class="prognum" id="prognum3"></h3>
+<h2 class="reward" id="reward3"></h2>
+</div>
+</div>
+<div class="contentbott" id="research">
+<h1>Research</h1> <i class="fa fa-undo" id="reset2" onclick="resetResearch()"></i>
+<div class="info" id="inforeset" style="left:160px; top: 10px;">
+<h4>Reset your researchs and give your research points back</h4>
+</div>
+<div id="rpower">
+<div id="rp1" class="researchdivslocked" onclick="unlockresearchp(1)">
+<h2 id="simbolorp1">M</h2>
+</div>
+<div class="info" id="rpi1">
+<h1>Master Maths</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Power x2</h4>
+</div>
+<div id="rp2" class="researchdivslocked" onclick="unlockresearchp(2)">
+<h2 id="simbolorp2">♚</h2>
+</div>
+<div class="info" id="rpi2">
+<h1>Acquire chess skills</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Bonus multiplier +1</h4>
+</div>
+<div id="rp3" class="researchdivslocked" onclick="unlockresearchp(3)">
+<h2 id="simbolorp3">⛃</h2>
+</div>
+<div class="info" id="rpi3">
+<h1>Acquire poker skills</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Bonus chance x2</h4>
+</div>
+<div id="rp4" class="researchdivslocked" onclick="unlockresearchp(4)">
+<h2 id="simbolorp4"><i class="material-icons" style="font-size:30px;line-height: 50px">laptop</i></h2>
+</div>
+<div class="info" id="rpi4">
+<h1>Master Computer Science</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Bonus chance x2</h4>
+</div>
+<div id="rp5" class="researchdivslocked" onclick="unlockresearchp(5)">
+<h2 id="simbolorp5">⚛</h2>
+</div>
+<div class="info" id="rpi5">
+<h1>Master Quantum Physics</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Power x2</h4>
+</div>
+<div id="rp6" class="researchdivslocked" onclick="unlockresearchp(6)">
+<h2 id="simbolorp6"><i class="fa fa-medkit" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rpi6">
+<h1>Master Medicine</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Bonus chance x2</h4>
+</div>
+<div id="rp7" class="researchdivslocked" onclick="unlockresearchp(7)">
+<h2 id="simbolorp7"><i class="fa fa-gears" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rpi7">
+<h1>Master Mechanics</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Bonus multiplier +1</h4>
+</div>
+<div id="rp8" class="researchdivslocked" onclick="unlockresearchp(8)">
+<h2 id="simbolorp8"><i class="material-icons" style="font-size:30px;line-height: 50px">person</i></h2>
+</div>
+<div class="info" id="rpi8">
+<h1>Meet Dumbledore</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Power x2:<br>-Bonus multiplier +1
+</h4>
+</div>
+</div>
+<div id="rapp">
+<div id="ra1" class="researchdivslocked" onclick="unlockresearcha(1)">
+<h2 id="simbolora1"><i class="fa fa-university" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai1">
+<h1>Build a school</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Unlock Apprentices<br>-1 Apprentice
+</h4>
+</div>
+<div id="ra2" class="researchdivslocked" onclick="unlockresearcha(2)">
+<h2 id="simbolora2"><i class="fa fa-group" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai2">
+<h1>Hire more teachers</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Teacher power x1.5</h4>
+</div>
+<div id="ra3" class="researchdivslocked" onclick="unlockresearcha(3)">
+<h2 id="simbolora3"><i class="fa fa-newspaper-o" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai3">
+<h1>Advertises your School</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>Apprentices number x1.5</h4>
+</div>
+<div id="ra4" class="researchdivslocked" onclick="unlockresearcha(4)">
+<h2 id="simbolora4"><i class="fa fa-smile-o" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai4">
+<h1>Meet Bill Gates</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Teacher power x1.5<br>-Apprentices
+number x1.5</h4>
+</div>
+<div id="ra5" class="researchdivslocked" onclick="unlockresearcha(5)">
+<h2 id="simbolora5"><i class="fa fa-book" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai5">
+<h1>Build a Biblio</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Apprentices number x1.5</h4>
+</div>
+<div id="ra6" class="researchdivslocked" onclick="unlockresearcha(6)">
+<h2 id="simbolora6"><i class="fa fa-search" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai6">
+<h1>Build a Lab</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Teacher power x1.5</h4>
+</div>
+<div id="ra7" class="researchdivslocked" onclick="unlockresearcha(7)">
+<h2 id="simbolora7"><i class="fa fa-graduation-cap" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rai7">
+<h1>Build an University</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>Reward:<br>-Teacher power x1.5<br>-Apprentices
+number x1.5</h4>
+</div>
+</div>
+<div id="rf" class="researchdivs" onclick="finishthislevel()" style="display:none; top: 341px;left: 202px;">
+<h2 id="simbolora7"><i class="fa fa-graduation-cap" style="font-size:28px"></i></h2>
+</div>
+<div class="info" id="rfi">
+<h1 id="finishleveltext">Finish Level 1</h1>
+<h4>Requires:<br><span class="rpcost"></span><br>You will lose all the progress and start over with
+a bigger difficulty</h4>
+</div>
+</div>
+<div class="contentbott" id="stats">
+<h1>settings</h1>
+<button onclick="confirmReset()" id="startover">
+<h2>Reset</h2>
+</button>
+<div id="reset">
+<h4 style="margin:0; position:absolute; top:40px">You need to reset to get research points</h4>
+<h4 id="nextstart" style="margin:0; position:absolute; top:60px">Next reset: + <span id="nextrp">0</span> research points</h4><h4>
+</h4></div>
+<h3 id="tuned" style="margin: 0;top: 150px;width: 100%;position: absolute;text-align: center;">To stay
+tuned on my games</h3>
+<div id="themecolor" style="height:0px">
+<button onclick="abrefechacolors()" id="themebutton">Theme color</button>
+<div id="colors">
+<div id="color1" onclick="changethemecolor(0)"></div>
+<div id="color2" onclick="changethemecolor(36)"></div>
+<div id="color3" onclick="changethemecolor(55)"></div>
+<div id="color4" onclick="changethemecolor(108)"></div>
+<div id="color5" onclick="changethemecolor(144)"></div>
+<div id="color6" onclick="changethemecolor(180)"></div>
+<div id="color7" onclick="changethemecolor(216)"></div>
+<div id="color8" onclick="changethemecolor(252)"></div>
+<div id="color9" onclick="changethemecolor(288)"></div>
+<div id="color10" onclick="changethemecolor(324)"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script src="style/explosion.js"></script>
+
+<script src="style/utils.js"></script>
+<script src="style/script.js"></script>
+<script src="style/clicks.js"></script>
+<!--客服 开始-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/g8hh/g8hh.github.io/static/css/kf.css" type="text/css" media="screen" charset="utf-8">
+<script src="https://cdn.jsdelivr.net/gh/g8hh/g8hh.github.io/static/js/kf.js"></script>
+<!-- 客服 结束 -->
+<!--站长统计-->
+    <div style="display: none">
+        <script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279902880&web_id=1279902880"></script>
+    </div>
+</body></html>
