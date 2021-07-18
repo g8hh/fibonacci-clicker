@@ -613,8 +613,8 @@ function onoff() {
 function confirmReset() {
     if (next > 0) {
         var confirmacao = confirm(
-            "Your upgrades and achievements will start over  and you will gain " +
-            next + " research points.");
+            "您的升级和成就将重新开始，您将获得 " +
+            next + " 研究点.");
         if (confirmacao == true)
             reset();
     }
